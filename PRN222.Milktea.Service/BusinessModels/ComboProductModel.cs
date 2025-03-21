@@ -8,10 +8,10 @@ namespace PRN222.Milktea.Service.BusinessModels
 {
     public class ComboProductModel
     {
-        public int ComboId { get; set; }
+		public int ComboProductId { get; set; }
 
-        public int ProductId { get; set; }
+		public int IncludedProductId { get; set; }
 
-        public int? Quantity { get; set; }
-    }
+		public int? Quantity { get; set; }
+	}
 }

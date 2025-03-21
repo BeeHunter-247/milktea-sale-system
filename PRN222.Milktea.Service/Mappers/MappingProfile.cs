@@ -9,6 +9,12 @@ namespace PRN222.Milktea.Service.Mappers
         public MappingProfile()
         {
             CreateMap<AccountModel, Account>().ReverseMap();
+            CreateMap<CategoryModel, Category>().ReverseMap();
+            CreateMap<ComboProductModel, ComboProduct>().ReverseMap();
+            CreateMap<OrderDetailModel, OrderDetail>().ReverseMap();
+            CreateMap<OrderModel, Order>().ReverseMap();
+            CreateMap<PaymentModel, Payment>().ReverseMap();
+            CreateMap<ProductModel, Product>().ReverseMap();
         }
     }
 }

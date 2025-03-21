@@ -7,13 +7,13 @@ namespace PRN222.Milktea.Repository.Models;
 
 public partial class ComboProduct
 {
-    public int ComboId { get; set; }
+    public int ComboProductId { get; set; }
 
-    public int ProductId { get; set; }
+    public int IncludedProductId { get; set; }
 
     public int? Quantity { get; set; }
 
-    public virtual Combo Combo { get; set; }
+    public virtual Product ComboProductNavigation { get; set; }
 
-    public virtual Product Product { get; set; }
+    public virtual Product IncludedProduct { get; set; }
 }
