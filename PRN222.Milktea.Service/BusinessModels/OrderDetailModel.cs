@@ -8,18 +8,14 @@ namespace PRN222.Milktea.Service.BusinessModels
 {
     public class OrderDetailModel
     {
-        public int OrderDetailId { get; set; }
+		public int OrderDetailId { get; set; }
 
-        public int? OrderId { get; set; }
+		public int OrderId { get; set; }
 
-        public int? ProductId { get; set; }
+		public int ProductId { get; set; }
 
-        public int? ExtraId { get; set; }
+		public int Quantity { get; set; }
 
-        public int? ComboId { get; set; }
-
-        public int Quantity { get; set; }
-
-        public decimal UnitPrice { get; set; }
-    }
+		public decimal UnitPrice { get; set; }
+	}
 }

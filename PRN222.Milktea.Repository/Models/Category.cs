@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace PRN222.Milktea.Repository.Models;
 
-public partial class Extra
+public partial class Category
 {
-    public int ExtraId { get; set; }
+    public int CategoryId { get; set; }
 
     public string Name { get; set; }
 
-    public decimal Price { get; set; }
+    public string Description { get; set; }
 
     public bool? IsActive { get; set; }
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

@@ -9,6 +9,8 @@ public partial class Product
 {
     public int ProductId { get; set; }
 
+    public int CategoryId { get; set; }
+
     public string Name { get; set; }
 
     public decimal Price { get; set; }
@@ -17,9 +19,15 @@ public partial class Product
 
     public string Image { get; set; }
 
+    public int ProductType { get; set; }
+
     public bool? IsActive { get; set; }
 
-    public virtual ICollection<ComboProduct> ComboProducts { get; set; } = new List<ComboProduct>();
+    public virtual Category Category { get; set; }
+
+    public virtual ICollection<ComboProduct> ComboProductComboProductNavigations { get; set; } = new List<ComboProduct>();
+
+    public virtual ICollection<ComboProduct> ComboProductIncludedProducts { get; set; } = new List<ComboProduct>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

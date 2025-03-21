@@ -7,12 +7,12 @@ namespace PRN222.Milktea.Repository.UnitOfWork
     {
         private readonly MilkteaSaleDBContext _context;
         private IGenericRepository<Account> _accountRepository;
-        private IGenericRepository<Combo> _comboRepository;
         private IGenericRepository<ComboProduct> _comboProductRepository;
-        private IGenericRepository<Extra> _extraRepository;
         private IGenericRepository<Order> _orderRepository;
         private IGenericRepository<OrderDetail> _orderDetailRepository;
         private IGenericRepository<Product> _productRepository;
+        private IGenericRepository<Payment> _paymentRepository;
+        private IGenericRepository<Category> _categoryRepository;
 
         public UnitOfWork(MilkteaSaleDBContext context)
         {
@@ -24,9 +24,9 @@ namespace PRN222.Milktea.Repository.UnitOfWork
             get { return _accountRepository ??= new GenericRepository<Account>(_context); }
         }
 
-        public IGenericRepository<Combo> ComboRepository
+        public IGenericRepository<Payment> PaymentRepository
         {
-            get { return _comboRepository ??= new GenericRepository<Combo>(_context); }
+            get { return _paymentRepository ??= new GenericRepository<Payment>(_context); }
         }
 
         public IGenericRepository<ComboProduct> ComboProductRepository
@@ -34,9 +34,9 @@ namespace PRN222.Milktea.Repository.UnitOfWork
             get { return _comboProductRepository ??= new GenericRepository<ComboProduct>(_context); }
         }
 
-        public IGenericRepository<Extra> ExtraRepository
+        public IGenericRepository<Category> CategoryRepository
         {
-            get { return _extraRepository ??= new GenericRepository<Extra>(_context); }
+            get { return _categoryRepository ??= new GenericRepository<Category>(_context); }
         }
 
         public IGenericRepository<Order> OrderRepository
