@@ -76,7 +76,16 @@ namespace PRN222.Milktea.MVC.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> Logout()
+        [HttpPost]
+        public async Task<IActionResult> Ban(int accountId)
+        {
+            await _accountService.BanAccountAsync(accountId);
+            return RedirectToAction("Index");
+        }
+
+
+
+        public async Task<IActionResult> Logout()
 		{
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index");

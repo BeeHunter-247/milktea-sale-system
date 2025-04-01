@@ -1,0 +1,42 @@
+﻿@model PRN222.Milktea.MVC.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Accounts</div>
+            <div class="card-body">
+                <p>Total Registered: <strong>@Model.TotalRegisteredAccounts</strong></p>
+                <p>Total Banned: <strong>@Model.TotalBannedAccounts</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Categories</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li class="list-group-item">
+                            @category.Name (@(category.IsActive.HasValue ? (category.IsActive.Value ? "Active" : "Inactive") : "Unknown"))
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Revenue</div>
+            <div class="card-body">
+                <p>Total: <strong>@Model.TotalRevenue.ToString("C")</strong></p>
+            </div>
+        </div>
+    </div>
+</div>

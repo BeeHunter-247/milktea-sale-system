@@ -39,5 +39,37 @@ namespace PRN222.Milktea.Service.Services
             }
 
         }
+        public async Task<IEnumerable<AccountModelAdmin>> GetAllAccountsExceptAdminAsync(int currentAdminId)
+        {
+            var accounts = await _unitOfWork.AccountRepository.GetByConditionAsync(
+                condition: a => a.AccountId != currentAdminId && a.AccountRole != 1
+            );
+            return _mapper.Map<IEnumerable<AccountModelAdmin>>(accounts);
+        }
+
+        public async Task BanAccountAsync(int accountId)
+        {
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+            if (account != null)
+            {
+                account.IsActive = false;
+                _unitOfWork.AccountRepository.Update(account);
+                await _unitOfWork.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> GetTotalRegisteredAccountsAsync()
+        {
+            var accounts = await _unitOfWork.AccountRepository.GetAsync();
+            return accounts.Count();
+        }
+
+        public async Task<int> GetTotalBannedAccountsAsync()
+        {
+            var accounts = await _unitOfWork.AccountRepository.GetByConditionAsync(
+                condition: a => !(a.IsActive ?? true) // Giá trị mặc định là true nếu null
+            );
+            return accounts.Count();
+        }
     }
 }

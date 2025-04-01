@@ -10,5 +10,9 @@ namespace PRN222.Milktea.Service.Services.Interfaces
     public interface IAccountService
     {
         Task<AccountModel> Login(string email, string password);
+        Task<IEnumerable<AccountModelAdmin>> GetAllAccountsExceptAdminAsync(int currentAdminId);
+        Task BanAccountAsync(int accountId);
+        Task<int> GetTotalRegisteredAccountsAsync();
+        Task<int> GetTotalBannedAccountsAsync();
     }
 }

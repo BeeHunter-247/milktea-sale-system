@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PRN222.Milktea.Service.BusinessModels.AccountModelAdmin>
+
+@{
+    ViewData["Title"] = "Account Management";
+}
+
+<h2>Account Management</h2>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Account ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model)
+        {
+            <tr>
+                <td>@account.AccountId</td>
+                <td>@account.FullName</td>
+                <td>@account.Email</td>
+                <td>@(account.AccountRole == 1 ? "Admin" : "Customer")</td>
+                <td>@(account.IsActive.HasValue ? (account.IsActive.Value ? "Yes" : "No") : "Unknown")</td>
+
+                <td>
+                    @if (account.IsActive.HasValue && account.IsActive.Value)
+                    {
+                        <form asp-controller="Accounts" asp-action="Ban" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="accountId" value="@account.AccountId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Ban</button>
+                        </form>
+
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
