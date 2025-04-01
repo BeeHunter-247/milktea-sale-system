@@ -1,0 +1,30 @@
+﻿@model PRN222.Milktea.MVC.Models.LoginViewModel
+@{
+    Layout = null;
+}
+<link href="~/css/login.css" rel="stylesheet" />
+
+<body>
+    <div class="wrapper">
+        <form method="post" asp-action="Login">
+            <h2>Login</h2>
+            <div class="input-field">
+                <input type="email" asp-for="Email" class="form-control" required>
+                <label for="Email">Enter your email</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="input-field">
+                <input type="password" asp-for="Password" class="form-control" required>
+                <label for="Password">Enter your password</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="forget">
+                <label for="remember">
+                    <input type="checkbox" id="remember">
+                    <p>Remember me</p>
+                </label>
+            </div>
+            <button type="submit">Log In</button>
+		</form>
+    </div>
+</body>

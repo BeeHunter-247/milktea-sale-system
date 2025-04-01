@@ -25,9 +25,11 @@ public partial class Product
 
     public virtual Category Category { get; set; }
 
-    public virtual ICollection<ComboProduct> ComboProductComboProductNavigations { get; set; } = new List<ComboProduct>();
+    public virtual ICollection<Combo> ComboProductId1Navigations { get; set; } = new List<Combo>();
 
-    public virtual ICollection<ComboProduct> ComboProductIncludedProducts { get; set; } = new List<ComboProduct>();
+    public virtual ICollection<Combo> ComboProductId2Navigations { get; set; } = new List<Combo>();
+
+    public virtual ICollection<Combo> ComboProductId3Navigations { get; set; } = new List<Combo>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

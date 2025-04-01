@@ -19,7 +19,5 @@ public partial class Account
 
     public bool? IsActive { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
-
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

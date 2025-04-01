@@ -1,0 +1,58 @@
+﻿@model PRN222.Milktea.Service.BusinessModels.ComboModel
+
+<link href="~/css/create.css" rel="stylesheet" />
+
+<h1>Create</h1>
+
+<h4>Combo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ComboName" class="control-label"></label>
+                <input asp-for="ComboName" class="form-control" />
+                <span asp-validation-for="ComboName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComboPrice" class="control-label"></label>
+                <input asp-for="ComboPrice" class="form-control" />
+                <span asp-validation-for="ComboPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId1" class="control-label"></label>
+                <select asp-for="ProductId1" class ="form-control" asp-items="ViewBag.ProductId1"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId2" class="control-label"></label>
+                <select asp-for="ProductId2" class ="form-control" asp-items="ViewBag.ProductId2"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId3" class="control-label"></label>
+                <select asp-for="ProductId3" class ="form-control" asp-items="ViewBag.ProductId3"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn-back" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

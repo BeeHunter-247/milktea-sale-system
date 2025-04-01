@@ -1,0 +1,127 @@
+﻿/* Enhanced Milk Tea Theme CSS */
+
+:root {
+    --primary: #8B5A2B; /* Rich milk tea brown */
+    --secondary: #D4A76A; /* Caramel boba color */
+    --tertiary: #F3E5D8; /* Creamy light brown */
+    --accent: #E85A71; /* Fruity accent for highlights */
+    --light: #FDF6F0; /* Background cream */
+    --dark: #463020; /* Dark text color */
+    --shadow: rgba(139, 90, 43, 0.15); /* Soft shadow color */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at 10% 20%, var(--tertiary) 5%, transparent 5%), radial-gradient(circle at 90% 50%, var(--tertiary) 6%, transparent 6%), radial-gradient(circle at 30% 80%, var(--tertiary) 8%, transparent 8%), radial-gradient(circle at 70% 10%, var(--tertiary) 4%, transparent 4%);
+        opacity: 0.4;
+        z-index: -1;
+    }
+
+/* Header styling */
+h1, h4 {
+    color: var(--primary);
+    font-weight: 600;
+    position: relative;
+}
+
+h1 {
+    font-size: 2.4rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 0.8rem;
+}
+
+    h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--secondary);
+        border-radius: 2px;
+    }
+
+h3 {
+    color: var(--accent);
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--secondary);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--tertiary), transparent);
+    margin: 1.5rem 0;
+}
+
+/* Details list styling */
+dl.row {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 20px var(--shadow);
+    margin-bottom: 2rem;
+}
+
+dt.col-sm-2 {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.75rem 0;
+    position: relative;
+}
+
+    dt.col-sm-2::after {
+        content: ":";
+        position: absolute;
+        right: 0;
+    }
+
+dd.col-sm-10 {
+    font-size: 1.1rem;
+    padding: 0.75rem 0 0.75rem 1rem;
+    border-bottom: 1px dashed rgba(212, 167, 106, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+    dd.col-sm-10:last-of-type {
+        border-bottom: none;
+    }
+
+    /* Image styling within the details */
+    dd.col-sm-10 img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px var(--shadow);
+        transition: transform 0.3s;
+    }
+
+        dd.col-sm-10 img:hover {
+            transform: scale(1.02);
+        }
+
+/* Action

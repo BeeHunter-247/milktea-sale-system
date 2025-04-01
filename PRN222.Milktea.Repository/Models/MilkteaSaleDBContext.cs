@@ -17,7 +17,7 @@ public partial class MilkteaSaleDBContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<ComboProduct> ComboProducts { get; set; }
+    public virtual DbSet<Combo> Combos { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
@@ -31,16 +31,13 @@ public partial class MilkteaSaleDBContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Accounts__349DA5A6B8B3B89E");
+            entity.HasKey(e => e.AccountId).HasName("PK__Accounts__349DA5A67CD7AF8B");
 
-            entity.HasIndex(e => e.Email, "UQ__Accounts__A9D10534ECE4BFCD").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Accounts__A9D105344A86B0BD").IsUnique();
 
             entity.Property(e => e.AccountPassword)
                 .IsRequired()
                 .HasMaxLength(80);
-            entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
             entity.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(100);
@@ -52,7 +49,7 @@ public partial class MilkteaSaleDBContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B3D6E4712");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B9A8EEBA2");
 
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
@@ -61,26 +58,32 @@ public partial class MilkteaSaleDBContext : DbContext
                 .HasMaxLength(100);
         });
 
-        modelBuilder.Entity<ComboProduct>(entity =>
+        modelBuilder.Entity<Combo>(entity =>
         {
-            entity.HasKey(e => new { e.ComboProductId, e.IncludedProductId }).HasName("PK__ComboPro__97C1DC244B31E00E");
+            entity.HasKey(e => e.ComboId).HasName("PK__Combo__DD42582E6D036033");
 
-            entity.Property(e => e.Quantity).HasDefaultValueSql("((1))");
+            entity.ToTable("Combo");
 
-            entity.HasOne(d => d.ComboProductNavigation).WithMany(p => p.ComboProductComboProductNavigations)
-                .HasForeignKey(d => d.ComboProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ComboProd__Combo__47DBAE45");
+            entity.Property(e => e.ComboName).HasMaxLength(100);
+            entity.Property(e => e.ComboPrice).HasColumnType("decimal(10, 3)");
+            entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
-            entity.HasOne(d => d.IncludedProduct).WithMany(p => p.ComboProductIncludedProducts)
-                .HasForeignKey(d => d.IncludedProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ComboProd__Inclu__48CFD27E");
+            entity.HasOne(d => d.ProductId1Navigation).WithMany(p => p.ComboProductId1Navigations)
+                .HasForeignKey(d => d.ProductId1)
+                .HasConstraintName("FK__Combo__ProductId__45F365D3");
+
+            entity.HasOne(d => d.ProductId2Navigation).WithMany(p => p.ComboProductId2Navigations)
+                .HasForeignKey(d => d.ProductId2)
+                .HasConstraintName("FK__Combo__ProductId__46E78A0C");
+
+            entity.HasOne(d => d.ProductId3Navigation).WithMany(p => p.ComboProductId3Navigations)
+                .HasForeignKey(d => d.ProductId3)
+                .HasConstraintName("FK__Combo__ProductId__47DBAE45");
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFE68E7135");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF397D2223");
 
             entity.Property(e => e.CustomerName)
                 .IsRequired()
@@ -96,29 +99,32 @@ public partial class MilkteaSaleDBContext : DbContext
             entity.HasOne(d => d.Account).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.AccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Orders__AccountI__4F7CD00D");
+                .HasConstraintName("FK__Orders__AccountI__4E88ABD4");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C5FE77231");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36CCDE57E38");
 
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.Combo).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.ComboId)
+                .HasConstraintName("FK__OrderDeta__Combo__5535A963");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderDeta__Order__5441852A");
+                .HasConstraintName("FK__OrderDeta__Order__534D60F1");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderDeta__Produ__5535A963");
+                .HasConstraintName("FK__OrderDeta__Produ__5441852A");
         });
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A3823279941");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38A1789F0A");
 
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.PaymentDate)
@@ -139,7 +145,7 @@ public partial class MilkteaSaleDBContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CDF2CDA31B");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CDFBE0F5EB");
 
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Image).IsUnicode(false);
@@ -147,13 +153,13 @@ public partial class MilkteaSaleDBContext : DbContext
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Price).HasColumnType("decimal(10, 3)");
             entity.Property(e => e.ProductType).HasDefaultValueSql("((1))");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Products__Catego__4316F928");
+                .HasConstraintName("FK__Products__Catego__4222D4EF");
         });
 
         OnModelCreatingPartial(modelBuilder);

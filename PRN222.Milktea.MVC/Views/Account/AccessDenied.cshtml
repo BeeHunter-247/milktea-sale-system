@@ -1,0 +1,54 @@
+﻿@{
+	Layout = null;
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/PRN222.Milktea.MVC.styles.css" asp-append-version="true" />
+
+<div class="access-denied-container">
+    <h1 class="text-danger">Access Denied</h1>
+    <p>You do not have permission to access this page.</p>
+    <a class="btn btn-primary" asp-controller="Account" asp-action="Index">Back to Login</a>
+</div>
+
+<style>
+    .access-denied-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        background-color: #f8d7da;
+        color: #721c24;
+        font-family: Arial, sans-serif;
+    }
+
+        .access-denied-container h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .access-denied-container p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .access-denied-container .btn {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+            .access-denied-container .btn:hover {
+                background-color: #c82333;
+                border-color: #bd2130;
+            }
+
+</style>

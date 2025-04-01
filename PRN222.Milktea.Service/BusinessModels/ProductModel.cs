@@ -23,5 +23,7 @@ namespace PRN222.Milktea.Service.BusinessModels
 		public int ProductType { get; set; }
 
 		public bool? IsActive { get; set; }
-	}
+
+        public string? CategoryName { get; set; }
+    }
 }

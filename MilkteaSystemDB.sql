@@ -12,7 +12,6 @@ CREATE TABLE Accounts (
     Email NVARCHAR(100) UNIQUE NOT NULL,
     AccountRole INT NOT NULL, -- 1: Admin, 2: Customer
     IsActive BIT DEFAULT 1,
-    CreatedDate DATETIME DEFAULT GETDATE(),
     CONSTRAINT CHK_AccountRole CHECK (AccountRole IN (1, 2))
 );
 GO
@@ -20,8 +19,8 @@ GO
 -- Bảng Categories (Danh mục sản phẩm)
 CREATE TABLE Categories (
     CategoryId INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(100) NOT NULL,
-    Description NVARCHAR(255),
+    [Name] NVARCHAR(100) NOT NULL,
+    [Description] NVARCHAR(255),
     IsActive BIT DEFAULT 1
 );
 GO
@@ -31,26 +30,31 @@ CREATE TABLE Products (
     ProductId INT PRIMARY KEY IDENTITY(1,1),
     CategoryId INT NOT NULL,
     [Name] NVARCHAR(100) NOT NULL,
-    Price DECIMAL(18,2) NOT NULL,
+    Price DECIMAL(10,3) NOT NULL,
     [Description] NVARCHAR(255),
     [Image] VARCHAR(MAX),
-    ProductType INT NOT NULL DEFAULT 1, -- 1: Regular, 2: Extra, 3: Combo
+    ProductType INT NOT NULL DEFAULT 1, -- 1: Regular, 2: Extra
     IsActive BIT DEFAULT 1,
     CONSTRAINT CHK_Price CHECK (Price >= 0),
-    CONSTRAINT CHK_ProductType CHECK (ProductType IN (1, 2, 3)),
+    CONSTRAINT CHK_ProductType CHECK (ProductType IN (1, 2)),
     FOREIGN KEY (CategoryId) REFERENCES Categories(CategoryId)
 );
 GO
 
 -- Bảng ComboProducts (Liên kết giữa các sản phẩm trong combo)
-CREATE TABLE ComboProducts (
-    ComboProductId INT,       -- ProductId của sản phẩm là combo
-    IncludedProductId INT,    -- ProductId của sản phẩm được bao gồm trong combo
-    Quantity INT DEFAULT 1,
-    CONSTRAINT CHK_Quantity CHECK (Quantity > 0),
-    PRIMARY KEY (ComboProductId, IncludedProductId),
-    FOREIGN KEY (ComboProductId) REFERENCES Products(ProductId),
-    FOREIGN KEY (IncludedProductId) REFERENCES Products(ProductId)
+CREATE TABLE Combo (
+    ComboId INT PRIMARY KEY IDENTITY(1, 1),       -- ProductId của sản phẩm là combo
+	ComboName NVARCHAR(100),
+	ComboPrice DECIMAL(10,3),
+	[Description] NVARCHAR(MAX),
+	[Image] NVARCHAR(MAX),
+    ProductId1 INT, 
+	ProductId2 INT,
+	ProductId3 INT,
+	IsActive BIT DEFAULT 1,
+    FOREIGN KEY (ProductId1) REFERENCES Products(ProductId),
+	FOREIGN KEY (ProductId2) REFERENCES Products(ProductId),
+	FOREIGN KEY (ProductId3) REFERENCES Products(ProductId),
 );
 GO
 
@@ -72,13 +76,15 @@ GO
 CREATE TABLE OrderDetails (
     OrderDetailId INT PRIMARY KEY IDENTITY(1,1),
     OrderId INT NOT NULL,
-    ProductId INT NOT NULL,
+    ProductId INT NULL,
+	ComboId INT NULL,
     Quantity INT NOT NULL,
     UnitPrice DECIMAL(18,2) NOT NULL,
     CONSTRAINT CHK_OrderDetail_Quantity CHECK (Quantity > 0),
     CONSTRAINT CHK_UnitPrice CHECK (UnitPrice >= 0),
     FOREIGN KEY (OrderId) REFERENCES Orders(OrderId),
-    FOREIGN KEY (ProductId) REFERENCES Products(ProductId)
+    FOREIGN KEY (ProductId) REFERENCES Products(ProductId),
+    FOREIGN KEY (ComboId) REFERENCES Combo(ComboId)
 );
 GO
 
@@ -105,46 +111,38 @@ INSERT INTO Accounts (AccountPassword, FullName, Email, AccountRole) VALUES
 GO
 
 -- Thêm dữ liệu vào Categories
-INSERT INTO Categories (Name, Description) VALUES
-('Milk Tea', 'Các loại trà sữa'),
-('Topping', 'Các loại topping bổ sung'),
-('Combo', 'Các gói combo');
+INSERT INTO Categories ([Name], [Description]) VALUES
+('Milk Tea', N'Các loại trà sữa'),
+('Topping', N'Các loại topping bổ sung'),
+('Combo', N'Các gói combo');
 GO
 
 -- Thêm dữ liệu vào Products (đã thay IsExtra, IsCombo bằng ProductType)
 INSERT INTO Products (CategoryId, [Name], Price, [Description], [Image], ProductType) VALUES
-(1, 'Milk Tea Trân Châu', 30000, 'Trà sữa truyền thống với trân châu dai', '', 1), -- Regular
-(1, 'Milk Tea Matcha', 35000, 'Trà sữa vị matcha thơm ngon', '', 1),         -- Regular
-(1, 'Milk Tea Strawberry', 32000, 'Trà sữa dâu ngọt ngào', '', 1),            -- Regular
-(2, 'Trân Châu', 5000, 'Topping trân châu', '', 2),                           -- Extra
-(2, 'Thạch Dừa', 6000, 'Topping thạch dừa', '', 2),                          -- Extra
-(2, 'Pudding', 7000, 'Topping pudding', '', 2),                              -- Extra
-(3, 'Combo Couple', 50000, '2 Milk Tea bất kỳ + 1 Topping', '', 3),          -- Combo
-(3, 'Combo Family', 85000, '3 Milk Tea bất kỳ + 2 Topping', '', 3);          -- Combo
+(1, N'Milk Tea Trân Châu', 30000, N'Trà sữa truyền thống với trân châu dai', 'https://gongcha.com.vn/wp-content/uploads/2018/02/Tr%C3%A0-s%E1%BB%AFa-tr%C3%A0-%C4%91en-3.png', 1), -- Regular
+(1, N'Milk Tea Matcha', 35000, N'Trà sữa vị matcha thơm ngon', 'https://gongcha.com.vn/wp-content/uploads/2018/08/Strawberry-Oreo-Smoothie.png', 1),         -- Regular
+(1, N'Milk Tea Strawberry', 32000, N'Trà sữa dâu ngọt ngào', 'https://gongcha.com.vn/wp-content/uploads/2021/12/Yakult-Dao-Da-Xay.png', 1),            -- Regular
+(2, N'Trân Châu', 5000, N'Topping trân châu', 'https://gongcha.com.vn/wp-content/uploads/2018/03/Tr%C3%A2n-Ch%C3%A2u-%C4%90en.png', 2),                           -- Extra
+(2, N'Thạch Dừa', 6000, N'Topping thạch dừa', 'https://gongcha.com.vn/wp-content/uploads/2018/03/Kem-S%E1%BB%AFa.png', 2),                          -- Extra
+(2, N'Pudding', 7000, N'Topping pudding', 'https://gongcha.com.vn/wp-content/uploads/2018/03/%E5%B8%83%E4%B8%81-pudding.png', 2);                            -- Extra
 GO
 
--- Thêm dữ liệu vào ComboProducts
-INSERT INTO ComboProducts (ComboProductId, IncludedProductId, Quantity) VALUES
-(7, 1, 2), -- Combo Couple: 2 Milk Tea Trân Châu
-(7, 4, 1), -- Combo Couple: 1 Trân Châu
-(8, 2, 3), -- Combo Family: 3 Milk Tea Matcha
-(8, 5, 2); -- Combo Family: 2 Thạch Dừa
-GO
+INSERT INTO Combo(ComboName, ComboPrice, [Description], [Image], ProductId1, ProductId2, ProductId3, IsActive) VALUES
+(N'Combo Family', 75, N'Một sự kết hợp hoàn hảo dành cho cả gia đình! Combo Family mang đến hương vị thơm ngon từ trà sữa truyền thống, hòa quyện cùng lớp kem sánh mịn và topping hấp dẫn. Một lựa chọn tuyệt vời để cả nhà cùng nhau thưởng thức và tận hưởng khoảnh khắc ngọt ngào!', 'https://gongcha.com.vn/wp-content/uploads/2018/02/Tr%C3%A0-s%E1%BB%AFa-Chocolate-2.png', 1, 2, 3, 1),
+(N'Combo Summer', 105, N'Mùa hè chưa bao giờ sảng khoái đến thế! Combo Summer mang đến hương vị trà matcha đá xay thanh mát, kết hợp với lớp kem mịn màng và vị ngọt dịu của sữa. Hoàn hảo để giải nhiệt và tiếp thêm năng lượng cho ngày dài!', 'https://gongcha.com.vn/wp-content/uploads/2018/02/Matcha-%C4%91%C3%A1-xay-2.png', 4, 5, 6, 1);
 
 -- Thêm dữ liệu vào Orders
 INSERT INTO Orders (AccountId, CustomerName, TotalAmount, Status) VALUES
-(2, 'Nguyen Van A', 41000, 'Completed'),  -- Đơn hàng 1
-(3, 'Tran Thi B', 50000, 'Pending'),      -- Đơn hàng 2
-(2, 'Nguyen Van A', 85000, 'Processing'); -- Đơn hàng 3
+(2, N'Nguyen Van A', 41000, 'Completed'),  -- Đơn hàng 1
+(3, N'Tran Thi B', 50000, 'Pending'),      -- Đơn hàng 2
+(2, N'Nguyen Van A', 85000, 'Processing'); -- Đơn hàng 3
 GO
 
 -- Thêm dữ liệu vào OrderDetails
-INSERT INTO OrderDetails (OrderId, ProductId, Quantity, UnitPrice) VALUES
-(1, 1, 1, 30000), -- Order 1: 1 Milk Tea Trân Châu
-(1, 4, 1, 5000),  -- Order 1: 1 Trân Châu
-(1, 5, 1, 6000),  -- Order 1: 1 Thạch Dừa
-(2, 7, 1, 50000), -- Order 2: 1 Combo Couple
-(3, 8, 1, 85000); -- Order 3: 1 Combo Family
+INSERT INTO OrderDetails (OrderId, ProductId, ComboId, Quantity, UnitPrice) VALUES
+(1, 1, null, 1, 30000), -- Order 1: 1 Milk Tea Trân Châu
+(1, 4, null, 1, 5000),  -- Order 1: 1 Trân Châu
+(1, 5, null, 1, 6000);  -- Order 1: 1 Thạch Dừa
 GO
 
 -- Thêm dữ liệu vào Payments
