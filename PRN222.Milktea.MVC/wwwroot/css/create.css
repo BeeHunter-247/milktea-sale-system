@@ -1,0 +1,362 @@
+﻿/* Enhanced Milk Tea Theme CSS */
+
+:root {
+    --primary: #8B5A2B; /* Rich milk tea brown */
+    --secondary: #D4A76A; /* Caramel boba color */
+    --tertiary: #F3E5D8; /* Creamy light brown */
+    --accent: #E85A71; /* Fruity accent for highlights */
+    --light: #FDF6F0; /* Background cream */
+    --dark: #463020; /* Dark text color */
+    --shadow: rgba(139, 90, 43, 0.15); /* Soft shadow color */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at 10% 20%, var(--tertiary) 5%, transparent 5%), radial-gradient(circle at 90% 50%, var(--tertiary) 6%, transparent 6%), radial-gradient(circle at 30% 80%, var(--tertiary) 8%, transparent 8%), radial-gradient(circle at 70% 10%, var(--tertiary) 4%, transparent 4%);
+        opacity: 0.4;
+        z-index: -1;
+    }
+
+/* Header styling */
+h1, h4 {
+    color: var(--primary);
+    font-weight: 600;
+    position: relative;
+}
+
+h1 {
+    font-size: 2.4rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 0.8rem;
+}
+
+    h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--secondary);
+        border-radius: 2px;
+    }
+
+h4 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--secondary);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--tertiary), transparent);
+    margin: 1.5rem 0;
+}
+
+/* Details list styling */
+dl.row {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 20px var(--shadow);
+    margin-bottom: 2rem;
+}
+
+dt.col-sm-2 {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.75rem 0;
+    position: relative;
+}
+
+    dt.col-sm-2::after {
+        content: ":";
+        position: absolute;
+        right: 0;
+    }
+
+dd.col-sm-10 {
+    font-size: 1.1rem;
+    padding: 0.75rem 0 0.75rem 1rem;
+    border-bottom: 1px dashed rgba(212, 167, 106, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+    dd.col-sm-10:last-of-type {
+        border-bottom: none;
+    }
+
+    /* Image styling within the details */
+    dd.col-sm-10 img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px var(--shadow);
+        transition: transform 0.3s;
+    }
+
+        dd.col-sm-10 img:hover {
+            transform: scale(1.02);
+        }
+
+/* Action links styling */
+div > .btn-back {
+    display: inline-block;
+    padding: 0.7rem 1.8rem;
+    margin: 0.5rem 1rem 0.5rem 0;
+    background-color: var(--secondary);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+    div > a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    div > a:hover {
+        background-color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 12px var(--shadow);
+    }
+
+        div > a:hover::before {
+            left: 100%;
+        }
+
+a[asp-action="Edit"] {
+    background-color: var(--accent);
+}
+
+a[asp-action="Index"] {
+    background-color: var(--secondary);
+}
+
+/* Container and responsive styling */
+.container {
+    max-width: 850px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Active status indicator */
+dd.col-sm-10:nth-of-type(6) {
+    display: flex;
+    align-items: center;
+}
+
+    dd.col-sm-10:nth-of-type(6)::before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+        background-color: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+    }
+
+/* Price styling */
+dd.col-sm-10:nth-of-type(2) {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+/* Form container centering and styling */
+.row {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.col-md-4, .col-md-6, .col-md-8, .col-md-10, .col-md-12 {
+    width: 100%;
+    max-width: 500px;
+    padding: 2.5rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--shadow);
+}
+
+/* Form elements styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.control-label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--tertiary);
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(212, 167, 106, 0.2);
+    }
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B5A2B' d='M6 8.825l-4.175-4.9 1.175-1 3 3.525 3-3.525 1.175 1z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+/* Button container for form buttons */
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Equal width buttons side by side */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+    .button-container .btn-primary,
+    .button-container a {
+        flex: 1;
+        text-align: center;
+        margin: 0 0.5rem;
+        padding: 0.75rem 0;
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 3px 8px var(--shadow);
+    }
+
+        .button-container .btn-primary:first-child,
+        .button-container a:first-child {
+            margin-left: 0;
+        }
+
+        .button-container .btn-primary:last-child,
+        .button-container a:last-child {
+            margin-right: 0;
+        }
+
+.btn-primary {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px var(--shadow);
+    }
+
+/* Submit button styling */
+input[type="submit"].btn-primary {
+    background-color: var(--accent);
+}
+
+/* Validation styling */
+.text-danger {
+    color: var(--accent);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Form action buttons wrapper */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+    .form-actions input[type="submit"],
+    .form-actions a {
+        flex: 1;
+        margin: 0 0.5rem;
+        text-align: center;
+    }
+
+        .form-actions input[type="submit"]:first-child,
+        .form-actions a:first-child {
+            margin-left: 0;
+        }
+
+        .form-actions input[type="submit"]:last-child,
+        .form-actions a:last-child {
+            margin-right: 0;
+        }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    dl.row {
+        padding: 1.2rem;
+    }
+
+    dt.col-sm-2, dd.col-sm-10 {
+        padding: 0.6rem 0;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h4 {
+        font-size: 1.4rem;
+    }
+
+    .col-md-4, .col-md-6, .col-md-8, .col-md-10, .col-md-12 {
+        padding: 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+        .form-actions input[type="submit"],
+        .form-actions a {
+            margin: 0.5rem 0;
+        }
+}

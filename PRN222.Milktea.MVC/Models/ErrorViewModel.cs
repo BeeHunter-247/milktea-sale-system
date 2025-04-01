@@ -1,4 +1,4 @@
-namespace PRN222.Milktea.MVC.Models
+	namespace PRN222.Milktea.MVC.Models
 {
 	public class ErrorViewModel
 	{

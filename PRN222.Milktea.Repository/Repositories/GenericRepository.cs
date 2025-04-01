@@ -42,9 +42,14 @@ namespace PRN222.Milktea.Repository.Repositories
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<TEntity>?> GetByConditionAsync(Expression<Func<TEntity, bool>> condition, Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
+        public async Task<IEnumerable<TEntity>?> GetByConditionAsync(Expression<Func<TEntity, bool>> condition = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
-            IQueryable<TEntity> query = _dbSet.AsNoTracking().Where(condition);
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+
+            if(condition != null)
+            {
+                query = query.Where(condition);
+            }
 
             if(include != null)
             {

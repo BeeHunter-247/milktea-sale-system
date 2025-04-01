@@ -7,7 +7,7 @@ namespace PRN222.Milktea.Repository.UnitOfWork
     {
         private readonly MilkteaSaleDBContext _context;
         private IGenericRepository<Account> _accountRepository;
-        private IGenericRepository<ComboProduct> _comboProductRepository;
+        private IGenericRepository<Combo> _comboRepository;
         private IGenericRepository<Order> _orderRepository;
         private IGenericRepository<OrderDetail> _orderDetailRepository;
         private IGenericRepository<Product> _productRepository;
@@ -29,9 +29,9 @@ namespace PRN222.Milktea.Repository.UnitOfWork
             get { return _paymentRepository ??= new GenericRepository<Payment>(_context); }
         }
 
-        public IGenericRepository<ComboProduct> ComboProductRepository
+        public IGenericRepository<Combo> ComboRepository
         {
-            get { return _comboProductRepository ??= new GenericRepository<ComboProduct>(_context); }
+            get { return _comboRepository ??= new GenericRepository<Combo>(_context); }
         }
 
         public IGenericRepository<Category> CategoryRepository
