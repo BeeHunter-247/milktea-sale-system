@@ -45,7 +45,7 @@ namespace PRN222.Milktea.MVC
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Account/Index";
+                    options.LoginPath = "/Account/Login";
                     options.LogoutPath = "/Account/Logout";
                     options.AccessDeniedPath = "/Account/AccessDenied";
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
@@ -84,7 +84,7 @@ namespace PRN222.Milktea.MVC
             // Set up the default controller route
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             // Run the application
             app.Run();
