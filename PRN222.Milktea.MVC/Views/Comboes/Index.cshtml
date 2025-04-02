@@ -31,13 +31,13 @@
 					@Html.DisplayFor(modelItem => item.ComboName)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.ComboPrice)
+					@(item.ComboPrice)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Description)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.IsActive)
+					@(item.IsActive.HasValue ? (item.IsActive.Value ? "Yes" : "No") : "Unknow")
 				</td>
 				<td>
 					<a asp-action="Edit" asp-route-id="@item.ComboId">Edit</a> |
