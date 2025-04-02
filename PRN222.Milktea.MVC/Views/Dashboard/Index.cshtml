@@ -1,42 +1,137 @@
 ﻿@model PRN222.Milktea.MVC.Models.DashboardViewModel
+<link href="~/css/dashboard.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<h2>Admin Dashboard</h2>
+<h2 class="dashboard-title">Admin Dashboard</h2>
 <div class="row">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">Accounts</div>
+    <!-- Card on top -->
+    <div class="card-top">
+        <div class="card dashboard-card">
+            <div class="card-header text-center">Accounts</div>
             <div class="card-body">
-                <p>Total Registered: <strong>@Model.TotalRegisteredAccounts</strong></p>
-                <p>Total Banned: <strong>@Model.TotalBannedAccounts</strong></p>
+                <canvas id="accountsChart"></canvas>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">Categories</div>
-            <div class="card-body">
-                <ul class="list-group">
-                    @foreach (var category in Model.Categories)
-                    {
-                        <li class="list-group-item">
-                            @category.Name (@(category.IsActive.HasValue ? (category.IsActive.Value ? "Active" : "Inactive") : "Unknown"))
 
-                        </li>
-                    }
-                </ul>
+    <!-- Cards below -->
+    <div class="card-bottom">
+        <div class="card dashboard-card">
+            <div class="card-header text-center">Categories</div>
+            <div class="card-body">
+                <canvas id="categoriesChart"></canvas>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">Revenue</div>
+    <div class="card-bottom">
+        <div class="card dashboard-card">
+            <div class="card-header text-center">Revenue</div>
             <div class="card-body">
-                <p>Total: <strong>@Model.TotalRevenue.ToString("C")</strong></p>
+                <canvas id="revenueChart"></canvas>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var accountsCtx = document.getElementById('accountsChart').getContext('2d');
+    var accountsChart = new Chart(accountsCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Total Registered', 'Total Banned'],
+            datasets: [{
+                label: 'Accounts Overview',
+                data: [@Model.TotalRegisteredAccounts, @Model.TotalBannedAccounts],
+                backgroundColor: ['#007bff', '#dc3545'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true, // Đảm bảo biểu đồ tự động thay đổi kích thước
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 14,
+                            family: 'Arial, sans-serif'
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#fff',
+                    titleColor: '#333',
+                    bodyColor: '#007bff'
+                }
+            }
+        }
+    });
+
+    var categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
+    var categoriesChart = new Chart(categoriesCtx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.Categories.Select(c => c.Name).ToArray())),
+            datasets: [{
+                label: 'Categories',
+                data: @Html.Raw(Json.Serialize(Model.Categories.Select(c => c.IsActive.HasValue ? (c.IsActive.Value ? 1 : 0) : 0).ToArray())),
+                backgroundColor: '#28a745',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    backgroundColor: '#fff',
+                    titleColor: '#333',
+                    bodyColor: '#007bff'
+                }
+            }
+        }
+    });
+
+    var revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(revenueCtx, {
+        type: 'line', 
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.TotalRevenue.Select(r => r.Month.ToString("MMMM yyyy")).ToArray())),
+            datasets: [{
+                label: 'Monthly Revenue',
+                data: @Html.Raw(Json.Serialize(Model.TotalRevenue.Select(r => r.Total).ToArray())),
+                backgroundColor: '#007bff',
+                borderWidth: 1,
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 14,
+                            family: 'Arial, sans-serif'
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#fff',
+                    titleColor: '#333',
+                    bodyColor: '#007bff'
+                }
+            }
+        }
+    });
+</script>
+

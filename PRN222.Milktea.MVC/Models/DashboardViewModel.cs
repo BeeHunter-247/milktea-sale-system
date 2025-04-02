@@ -7,6 +7,12 @@ namespace PRN222.Milktea.MVC.Models
         public int TotalRegisteredAccounts { get; set; }
         public int TotalBannedAccounts { get; set; }
         public List<Category> Categories { get; set; }
-        public decimal TotalRevenue { get; set; }
+        public List<MonthlyRevenue> TotalRevenue { get; set; } 
+    }
+
+    public class MonthlyRevenue
+    {
+        public DateTime Month { get; set; }
+        public decimal Total { get; set; }
     }
 }
