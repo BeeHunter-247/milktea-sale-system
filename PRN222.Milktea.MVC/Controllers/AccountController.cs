@@ -20,7 +20,7 @@ namespace PRN222.Milktea.MVC.Controllers
         public string ErrorMessage { get; set; }
 
         [HttpGet]
-		public IActionResult Index()
+		public IActionResult Login()
 		{
 			if(User.Identity != null && User.Identity.IsAuthenticated)
 			{
@@ -35,7 +35,7 @@ namespace PRN222.Milktea.MVC.Controllers
 		public async Task<IActionResult> Login(LoginViewModel loginViewModel)
 		{
 			if (!ModelState.IsValid){
-				return RedirectToAction("Index");
+				return RedirectToAction("Login");
 			}
 			var account = await _accountService.Login(loginViewModel.Email, loginViewModel.Password);
 
@@ -88,7 +88,7 @@ namespace PRN222.Milktea.MVC.Controllers
         public async Task<IActionResult> Logout()
 		{
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
 		}
 	}
 }
