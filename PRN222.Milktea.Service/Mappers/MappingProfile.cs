@@ -15,6 +15,8 @@ namespace PRN222.Milktea.Service.Mappers
             CreateMap<OrderModel, Order>().ReverseMap();
             CreateMap<PaymentModel, Payment>().ReverseMap();
             CreateMap<ProductModel, Product>().ReverseMap();
+            CreateMap<Account, AccountModelAdmin>()
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive ?? true));
         }
     }
 }
