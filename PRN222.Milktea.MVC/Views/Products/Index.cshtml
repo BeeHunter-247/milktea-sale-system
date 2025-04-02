@@ -38,7 +38,7 @@
 					@Html.DisplayFor(modelItem => item.Name)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Price)
+					@(item.Price)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Description)
@@ -47,7 +47,7 @@
 					@Html.DisplayFor(modelItem => item.ProductType)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.IsActive)
+					@(item.IsActive.HasValue ? (item.IsActive.Value ? "Yes" : "No") : "Unknow")
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.CategoryName)

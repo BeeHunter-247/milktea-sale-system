@@ -119,12 +119,12 @@ GO
 
 -- Thêm dữ liệu vào Products (đã thay IsExtra, IsCombo bằng ProductType)
 INSERT INTO Products (CategoryId, [Name], Price, [Description], [Image], ProductType) VALUES
-(1, N'Milk Tea Trân Châu', 30000, N'Trà sữa truyền thống với trân châu dai', 'https://gongcha.com.vn/wp-content/uploads/2018/02/Tr%C3%A0-s%E1%BB%AFa-tr%C3%A0-%C4%91en-3.png', 1), -- Regular
-(1, N'Milk Tea Matcha', 35000, N'Trà sữa vị matcha thơm ngon', 'https://gongcha.com.vn/wp-content/uploads/2018/08/Strawberry-Oreo-Smoothie.png', 1),         -- Regular
-(1, N'Milk Tea Strawberry', 32000, N'Trà sữa dâu ngọt ngào', 'https://gongcha.com.vn/wp-content/uploads/2021/12/Yakult-Dao-Da-Xay.png', 1),            -- Regular
-(2, N'Trân Châu', 5000, N'Topping trân châu', 'https://gongcha.com.vn/wp-content/uploads/2018/03/Tr%C3%A2n-Ch%C3%A2u-%C4%90en.png', 2),                           -- Extra
-(2, N'Thạch Dừa', 6000, N'Topping thạch dừa', 'https://gongcha.com.vn/wp-content/uploads/2018/03/Kem-S%E1%BB%AFa.png', 2),                          -- Extra
-(2, N'Pudding', 7000, N'Topping pudding', 'https://gongcha.com.vn/wp-content/uploads/2018/03/%E5%B8%83%E4%B8%81-pudding.png', 2);                            -- Extra
+(1, N'Milk Tea Trân Châu', 30, N'Trà sữa truyền thống với trân châu dai', 'https://gongcha.com.vn/wp-content/uploads/2018/02/Tr%C3%A0-s%E1%BB%AFa-tr%C3%A0-%C4%91en-3.png', 1), -- Regular
+(1, N'Milk Tea Matcha', 35, N'Trà sữa vị matcha thơm ngon', 'https://gongcha.com.vn/wp-content/uploads/2018/08/Strawberry-Oreo-Smoothie.png', 1),         -- Regular
+(1, N'Milk Tea Strawberry', 32, N'Trà sữa dâu ngọt ngào', 'https://gongcha.com.vn/wp-content/uploads/2021/12/Yakult-Dao-Da-Xay.png', 1),            -- Regular
+(2, N'Trân Châu', 5, N'Topping trân châu', 'https://gongcha.com.vn/wp-content/uploads/2018/03/Tr%C3%A2n-Ch%C3%A2u-%C4%90en.png', 2),                           -- Extra
+(2, N'Thạch Dừa', 6, N'Topping thạch dừa', 'https://gongcha.com.vn/wp-content/uploads/2018/03/Kem-S%E1%BB%AFa.png', 2),                          -- Extra
+(2, N'Pudding', 7, N'Topping pudding', 'https://gongcha.com.vn/wp-content/uploads/2018/03/%E5%B8%83%E4%B8%81-pudding.png', 2);                            -- Extra
 GO
 
 INSERT INTO Combo(ComboName, ComboPrice, [Description], [Image], ProductId1, ProductId2, ProductId3, IsActive) VALUES
@@ -133,16 +133,16 @@ INSERT INTO Combo(ComboName, ComboPrice, [Description], [Image], ProductId1, Pro
 
 -- Thêm dữ liệu vào Orders
 INSERT INTO Orders (AccountId, CustomerName, TotalAmount, Status) VALUES
-(2, N'Nguyen Van A', 41000, 'Completed'),  -- Đơn hàng 1
-(3, N'Tran Thi B', 50000, 'Pending'),      -- Đơn hàng 2
-(2, N'Nguyen Van A', 85000, 'Processing'); -- Đơn hàng 3
+(2, N'Nguyen Van A', 41, 'Completed'),  -- Đơn hàng 1
+(3, N'Tran Thi B', 55, 'Pending'),      -- Đơn hàng 2
+(2, N'Nguyen Van A', 85, 'Processing'); -- Đơn hàng 3
 GO
 
 -- Thêm dữ liệu vào OrderDetails
 INSERT INTO OrderDetails (OrderId, ProductId, ComboId, Quantity, UnitPrice) VALUES
-(1, 1, null, 1, 30000), -- Order 1: 1 Milk Tea Trân Châu
-(1, 4, null, 1, 5000),  -- Order 1: 1 Trân Châu
-(1, 5, null, 1, 6000);  -- Order 1: 1 Thạch Dừa
+(1, 1, null, 1, 30), -- Order 1: 1 Milk Tea Trân Châu
+(1, 4, null, 1, 5),  -- Order 1: 1 Trân Châu
+(1, 5, null, 1, 6);  -- Order 1: 1 Thạch Dừa
 GO
 
 -- Thêm dữ liệu vào Payments
