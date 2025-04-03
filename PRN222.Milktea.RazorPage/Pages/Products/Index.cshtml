@@ -1,0 +1,15 @@
+﻿@page
+@model PRN222.Milktea.RazorPage.Pages.Products.ProductsIndexModel
+<h2>Products</h2>
+@foreach (var product in Model.Products)
+{
+    <div>
+        <h3>@product.Name</h3>
+        <p>@product.Price</p>
+        <a asp-page="Details" asp-route-id="@product.ProductId">Details</a>
+        <form method="post" asp-page-handler="AddToCart">
+            <input type="hidden" name="productId" value="@product.ProductId" />
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+}

@@ -1,0 +1,14 @@
+﻿@page
+@model PRN222.Milktea.RazorPage.Pages.Account.EditProfileModel
+<h2>Edit Profile</h2>
+<form method="post">
+    <div>
+        <label>Full Name</label>
+        <input asp-for="Profile.FullName" />
+    </div>
+    <div>
+        <label>Email</label>
+        <input asp-for="Profile.Email" />
+    </div>
+    <button type="submit">Save</button>
+</form>

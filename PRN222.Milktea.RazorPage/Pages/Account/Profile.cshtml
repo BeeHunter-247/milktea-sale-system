@@ -1,0 +1,8 @@
+﻿@page
+@model PRN222.Milktea.RazorPage.Pages.Account.ProfileModel
+<h2>Your Profile</h2>
+<div>
+    <p><strong>Full Name:</strong> @Model.Profile.FullName</p>
+    <p><strong>Email:</strong> @Model.Profile.Email</p>
+    <a asp-page="EditProfile">Edit Profile</a>
+</div>

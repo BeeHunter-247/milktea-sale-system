@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PRN222.Milktea.Service.BusinessModels
 {
-    public class OrderModel
-    {
+	public class OrderModel
+	{
 		public int OrderId { get; set; }
 
 		public int AccountId { get; set; }
@@ -20,4 +20,12 @@ namespace PRN222.Milktea.Service.BusinessModels
 
 		public string Status { get; set; }
 	}
+    public class OrderViewModel
+    {
+        public int OrderId { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string Status { get; set; }
+        public List<OrderDetailViewModel> Details { get; set; } = new List<OrderDetailViewModel>();
+    }
 }

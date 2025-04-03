@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PRN222.Milktea.Service.BusinessModels
 {
-    public class AccountModel
-    {
+	public class AccountModel
+	{
 		public int AccountId { get; set; }
 
 		public string AccountPassword { get; set; }
@@ -22,4 +22,10 @@ namespace PRN222.Milktea.Service.BusinessModels
 
 		public DateTime? CreatedDate { get; set; }
 	}
+    public class CustomerProfile
+    {
+        public int AccountId { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+    }
 }
