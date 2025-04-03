@@ -1,0 +1,26 @@
+﻿@page "{id:int}"
+@model PRN222.Milktea.RazorPage.Pages.Products.DetailsModel
+
+<h2>Product Details</h2>
+
+@if (Model.Product != null)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.Product.Image" class="card-img-top" alt="Product Image">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Product.Name</h5>
+            <p class="card-text"><strong>Price:</strong> @Model.Product.Price.ToString("C")</p>
+            <p class="card-text"><strong>Description:</strong> @Model.Product.Description</p>
+            <p class="card-text"><strong>Product Type:</strong> @Model.ProductTypeName</p>
+            <a asp-page="Index" class="btn btn-primary">Back to Product List</a>
+            <form method="post" asp-page-handler="AddToCart" class="mt-2">
+                <input type="hidden" name="productId" value="@Model.Product.ProductId" />
+                <button type="submit" class="btn btn-success">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p>Product not found.</p>
+}

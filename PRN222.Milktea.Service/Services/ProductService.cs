@@ -105,20 +105,26 @@ namespace PRN222.Milktea.Service.Services
                 throw new Exception(ex.Message);
             }
         }
-        
+
         public async Task<IEnumerable<ProductViewModel>> GetProductsAsync(int? categoryId)
         {
-            var products = await _unitOfWork.ProductRepository.GetAsync();
-            return products.Where(p => p.IsActive ?? false && (!categoryId.HasValue || p.CategoryId == categoryId))
-                           .Select(p => new ProductViewModel
-                           {
-                               ProductId = p.ProductId,
-                               Name = p.Name,
-                               Price = p.Price,
-                               Description = p.Description,
-                               Image = p.Image
-                           });
+            var products = await _unitOfWork.ProductRepository.GetByConditionAsync(
+                p => p.IsActive == true && (!categoryId.HasValue || p.CategoryId == categoryId),
+                query => query.Include(c => c.Category),
+                null
+            );
+
+            return products.Select(p => new ProductViewModel
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                Price = p.Price,
+                Description = p.Description,
+                Image = p.Image,
+                CategoryName = p.Category?.Name 
+            });
         }
+
         public async Task<ProductViewModel> GetProductDetailsAsync(int productId)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
@@ -132,6 +138,6 @@ namespace PRN222.Milktea.Service.Services
             };
         }
 
-       
+
     }
 }

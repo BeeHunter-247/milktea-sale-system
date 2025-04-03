@@ -36,5 +36,23 @@ namespace PRN222.Milktea.Service.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<CategoryModel> GetCategoryByIdAsync(int id)
+        {
+            try
+            {
+                var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+                if (category == null)
+                {
+                    throw new Exception("Category not found");
+                }
+
+                return _mapper.Map<CategoryModel>(category);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error fetching category by ID {id}: {ex.Message}");
+            }
+        }
     }
 }

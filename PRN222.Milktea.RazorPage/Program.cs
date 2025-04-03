@@ -5,6 +5,7 @@ using PRN222.Milktea.Service.Services.Interfaces;
 using PRN222.Milktea.Service.Services;
 using PRN222.Milktea.RazorPage.Hubs;
 using PRN222.Milktea.Service.Mappers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace PRN222.Milktea.RazorPage
 {
@@ -14,17 +15,28 @@ namespace PRN222.Milktea.RazorPage
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<MilkteaSaleDBContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             // Add services
             builder.Services.AddRazorPages();
             builder.Services.AddSignalR();
-            builder.Services.AddDbContext<MilkteaSaleDBContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
             builder.Services.AddSession();
             builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+            options.LoginPath = "";
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            options.SlidingExpiration = true;
+            });
             var app = builder.Build();
 
            
@@ -46,6 +58,7 @@ namespace PRN222.Milktea.RazorPage
 
             app.MapRazorPages();
             app.MapHub<OrderHub>("/orderHub");
+            app.MapHub<CartHub>("/cartHub");
             app.Run();
         }
     }
