@@ -10,5 +10,7 @@ namespace PRN222.Milktea.Service.Services.Interfaces
     public interface ICategoryService
     {
         Task<List<CategoryModel>> GetCategories();
+
+        Task<CategoryModel> GetCategoryByIdAsync(int id);
     }
 }

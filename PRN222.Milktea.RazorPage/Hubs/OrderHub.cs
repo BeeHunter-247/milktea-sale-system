@@ -8,5 +8,6 @@ namespace PRN222.Milktea.RazorPage.Hubs
         {
             await Clients.All.SendAsync("ReceiveOrderUpdate", orderId, status);
         }
+
     }
 }

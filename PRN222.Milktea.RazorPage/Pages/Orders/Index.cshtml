@@ -20,7 +20,7 @@
                 <td>@order.TotalAmount</td>
                 <td class="status">@order.Status</td>
                 <td>
-                    <a asp-page="Details" asp-route-id="@order.OrderId">Details</a>
+                       <a asp-page="/Orders/OrderDetails" asp-route-orderId="@order.OrderId">Details</a>
                     @if (order.Status == "Pending")
                     {
                         <form method="post" asp-page-handler="Cancel">
@@ -35,6 +35,6 @@
 </table>
 
 @section Scripts {
-    <script src="~/lib/signalr/signalr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signalr/5.0.11/signalr.min.js"></script>
     <script src="~/js/signalr-client.js"></script>
 }

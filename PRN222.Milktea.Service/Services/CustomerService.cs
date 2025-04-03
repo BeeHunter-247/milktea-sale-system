@@ -50,7 +50,7 @@ namespace PRN222.Milktea.Service.Services
                 CustomerName = (await _unitOfWork.AccountRepository.GetByIdAsync(accountId))?.FullName ?? throw new Exception("Account not found"),
                 TotalAmount = cart.Items.Sum(i => i.UnitPrice * i.Quantity),
                 Status = "Pending",
-                OrderDate = DateTime.Now // Assuming OrderDate isn’t nullable; adjust if needed
+                OrderDate = DateTime.Now 
             };
             await _unitOfWork.OrderRepository.AddAsync(order);
             await _unitOfWork.SaveChangesAsync();
@@ -106,6 +106,31 @@ namespace PRN222.Milktea.Service.Services
             }
         }
 
+        public async Task<PaymentViewModel> CreatePaymentAsync(int orderId, string paymentMethod)
+        {
+            var order = await _unitOfWork.OrderRepository.GetByIdAsync(orderId);
+            if (order == null) throw new Exception("Order not found");
+            var payment = new Payment
+            {
+                OrderId = orderId,
+                Amount = order.TotalAmount,
+                PaymentMethod = paymentMethod,
+                PaymentDate = DateTime.Now, 
+                Status = "Pending" 
+            };
+            await _unitOfWork.PaymentRepository.AddAsync(payment);
+            await _unitOfWork.SaveChangesAsync();
+
+            return new PaymentViewModel
+            {
+                OrderId = payment.OrderId,
+                PaymentDate = payment.PaymentDate,
+                Amount = payment.Amount,
+                PaymentMethod = payment.PaymentMethod,
+                Status = payment.Status
+            };
+        }
+
         public async Task<PaymentViewModel> MakePaymentAsync(int orderId, string paymentMethod)
         {
             var order = await _unitOfWork.OrderRepository.GetByIdAsync(orderId);
@@ -115,8 +140,8 @@ namespace PRN222.Milktea.Service.Services
                 OrderId = orderId,
                 Amount = order.TotalAmount,
                 PaymentMethod = paymentMethod,
-                PaymentDate = DateTime.Now, // Assuming GETDATE() default isn’t applied yet
-                Status = "Completed" // Simplified for demo
+                PaymentDate = DateTime.Now, 
+                Status = "Completed" 
             };
             await _unitOfWork.PaymentRepository.AddAsync(payment);
             await _unitOfWork.SaveChangesAsync();

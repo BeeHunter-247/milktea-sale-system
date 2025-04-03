@@ -11,5 +11,6 @@ namespace PRN222.Milktea.Repository.Repositories
         void Delete(TEntity entity);
         void Update(TEntity entity);
         Task<IEnumerable<TEntity>> GetAsync();
+
     }
 }
