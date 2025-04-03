@@ -59,6 +59,7 @@ namespace PRN222.Milktea.RazorPage
             app.MapRazorPages();
             app.MapHub<OrderHub>("/orderHub");
             app.MapHub<CartHub>("/cartHub");
+            app.MapGet("/", () => Results.Redirect("/Account/Login"));
             app.Run();
         }
     }
