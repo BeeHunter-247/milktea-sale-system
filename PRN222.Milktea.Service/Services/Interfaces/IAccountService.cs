@@ -14,5 +14,7 @@ namespace PRN222.Milktea.Service.Services.Interfaces
         Task BanAccountAsync(int accountId);
         Task<int> GetTotalRegisteredAccountsAsync();
         Task<int> GetTotalBannedAccountsAsync();
+
+        Task UnlockAccountAsync(int accountId);
     }
 }
