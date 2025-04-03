@@ -20,4 +20,10 @@ namespace PRN222.Milktea.Service.BusinessModels
 
         public decimal UnitPrice { get; set; }
     }
+    public class OrderDetailViewModel
+    {
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
 }

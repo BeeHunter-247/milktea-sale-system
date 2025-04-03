@@ -15,5 +15,7 @@ namespace PRN222.Milktea.Service.Services.Interfaces
         Task UpdateProductAsync(ProductModel product);
         Task DeleteProductAsync(int id);
         Task<List<ProductModel>> IsActiveProduct();
+        Task<IEnumerable<ProductViewModel>> GetProductsAsync(int? productId);
+        Task<ProductViewModel> GetProductDetailsAsync(int productId);
     }
 }

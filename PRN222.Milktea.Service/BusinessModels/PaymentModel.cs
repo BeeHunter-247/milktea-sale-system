@@ -20,4 +20,12 @@ namespace PRN222.Milktea.Service.BusinessModels
 
 		public string Status { get; set; }
 	}
+    public class PaymentViewModel
+    {
+        public int OrderId { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public decimal Amount { get; set; }
+        public string PaymentMethod { get; set; }
+        public string Status { get; set; }
+    }
 }

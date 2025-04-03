@@ -1,0 +1,41 @@
+﻿@page
+@model PRN222.Milktea.RazorPage.Pages.Payments.PaymentsIndexModel
+<h2>Your Payments</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var payment in Model.Payments)
+        {
+            <tr>
+                <td>@payment.OrderId</td>
+                <td>@payment.PaymentDate</td>
+                <td>@payment.Amount</td>
+                <td>@payment.PaymentMethod</td>
+                <td>@payment.Status</td>
+                <td>
+                    @if (payment.Status == "Pending")
+                    {
+                        <form method="post" asp-page-handler="Pay">
+                            <input type="hidden" name="orderId" value="@payment.OrderId" />
+                            <select name="paymentMethod">
+                                <option value="Cash">Cash</option>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Mobile App">Mobile App</option>
+                            </select>
+                            <button type="submit">Pay</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

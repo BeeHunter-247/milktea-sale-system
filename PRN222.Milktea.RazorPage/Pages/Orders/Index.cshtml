@@ -1,0 +1,40 @@
+﻿@page
+@model PRN222.Milktea.RazorPage.Pages.Orders.OrdersIndexModel
+<h2>Your Orders</h2>
+<table class="table" id="ordersTable">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr data-order-id="@order.OrderId">
+                <td>@order.OrderId</td>
+                <td>@order.OrderDate</td>
+                <td>@order.TotalAmount</td>
+                <td class="status">@order.Status</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@order.OrderId">Details</a>
+                    @if (order.Status == "Pending")
+                    {
+                        <form method="post" asp-page-handler="Cancel">
+                            <input type="hidden" name="orderId" value="@order.OrderId" />
+                            <button type="submit">Cancel</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/lib/signalr/signalr.js"></script>
+    <script src="~/js/signalr-client.js"></script>
+}

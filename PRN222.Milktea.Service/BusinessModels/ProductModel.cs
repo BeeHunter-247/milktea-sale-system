@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PRN222.Milktea.Service.BusinessModels
 {
-    public class ProductModel
-    {
+	public class ProductModel
+	{
 		public int ProductId { get; set; }
 
 		public int CategoryId { get; set; }
@@ -24,6 +24,14 @@ namespace PRN222.Milktea.Service.BusinessModels
 
 		public bool? IsActive { get; set; }
 
-        public string? CategoryName { get; set; }
+		public string? CategoryName { get; set; }
+	}
+    public class ProductViewModel
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
     }
 }

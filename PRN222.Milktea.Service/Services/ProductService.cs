@@ -90,9 +90,9 @@ namespace PRN222.Milktea.Service.Services
 
             var listModel = _mapper.Map<List<ProductModel>>(list);
             return listModel;
-		}
+        }
 
-		public async Task UpdateProductAsync(ProductModel product)
+        public async Task UpdateProductAsync(ProductModel product)
         {
             try
             {
@@ -105,5 +105,33 @@ namespace PRN222.Milktea.Service.Services
                 throw new Exception(ex.Message);
             }
         }
+        
+        public async Task<IEnumerable<ProductViewModel>> GetProductsAsync(int? categoryId)
+        {
+            var products = await _unitOfWork.ProductRepository.GetAsync();
+            return products.Where(p => p.IsActive ?? false && (!categoryId.HasValue || p.CategoryId == categoryId))
+                           .Select(p => new ProductViewModel
+                           {
+                               ProductId = p.ProductId,
+                               Name = p.Name,
+                               Price = p.Price,
+                               Description = p.Description,
+                               Image = p.Image
+                           });
+        }
+        public async Task<ProductViewModel> GetProductDetailsAsync(int productId)
+        {
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            return new ProductViewModel
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                Image = product.Image
+            };
+        }
+
+       
     }
 }
