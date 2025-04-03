@@ -138,6 +138,38 @@ namespace PRN222.Milktea.Service.Services
             };
         }
 
+		public async Task<Pagination<ProductModel>> GetProductsPaginationAsync(PaginationModel pagination)
+		{
+			try
+			{
+				var products = await _unitOfWork.ProductRepository.GetByConditionAsync(
+					null,
+					query => query.Include(c => c.Category),
+					null
+					);
 
-    }
+                var count = products.Count();
+
+
+                var list = products.Select(c => new ProductModel
+                {
+                    ProductId = c.ProductId,
+                    CategoryId = c.CategoryId,
+                    Name = c.Name,
+                    Price = c.Price,
+                    Description = c.Description,
+                    Image = c.Image,
+                    ProductType = c.ProductType,
+                    IsActive = c.IsActive,
+                    CategoryName = c.Category.Name
+                }).Skip((pagination.PageIndex - 1) * pagination.PageSize).Take(pagination.PageSize).ToList();
+
+				return new Pagination<ProductModel>(list, count);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
+	}
 }

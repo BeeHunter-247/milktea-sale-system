@@ -25,9 +25,19 @@ namespace PRN222.Milktea.MVC.Controllers
 
 
         // GET: Comboes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 6)
         {
-            var milkteaSaleDBContext = await _comboService.GetComboAsync();
+            var pagination = new PaginationModel
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+            };
+
+            var milkteaSaleDBContext = await _comboService.GetComboAsync(pagination);
+			pagination.PageTotals = (int)Math.Ceiling(milkteaSaleDBContext.TotalCount / (double)pagination.PageSize);
+
+			ViewBag.Pagination = pagination;
+
             return View(milkteaSaleDBContext);
         }
 
