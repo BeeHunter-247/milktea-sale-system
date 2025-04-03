@@ -34,8 +34,14 @@
                             <input type="hidden" name="accountId" value="@account.AccountId" />
                             <button type="submit" class="btn btn-danger btn-sm">Ban</button>
                         </form>
-
-
+                    }
+                    else
+                    {
+                        <form asp-controller="Account" asp-action="Unlock" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="accountId" value="@account.AccountId" />
+                            <button type="submit" class="btn btn-success btn-sm">Unlock</button>
+                        </form>
                     }
                 </td>
             </tr>

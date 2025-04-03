@@ -96,6 +96,14 @@ namespace PRN222.Milktea.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Authorize(Roles = "1")]
+        public async Task<IActionResult> Unlock(int accountId)
+        {
+            await _accountService.UnlockAccountAsync(accountId);
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public IActionResult AccessDenied()
         {

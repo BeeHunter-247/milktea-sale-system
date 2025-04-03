@@ -57,6 +57,17 @@ namespace PRN222.Milktea.Service.Services
                 await _unitOfWork.SaveChangesAsync();
             }
         }
+        public async Task UnlockAccountAsync(int accountId)
+        {
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+            if (account != null)
+            {
+                account.IsActive = true;  // Khôi phục tài khoản
+                _unitOfWork.AccountRepository.Update(account);
+                await _unitOfWork.SaveChangesAsync();
+            }
+        }
+
 
         public async Task<int> GetTotalRegisteredAccountsAsync()
         {
