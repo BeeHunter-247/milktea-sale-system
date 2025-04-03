@@ -44,7 +44,7 @@
 					@Html.DisplayFor(modelItem => item.Description)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.ProductType)
+					@(item.ProductType == 1 ? "Regular" : "Extra")
 				</td>
 				<td>
 					@(item.IsActive.HasValue ? (item.IsActive.Value ? "Yes" : "No") : "Unknow")
