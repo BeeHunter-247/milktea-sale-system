@@ -1,41 +1,116 @@
 ﻿@page
 @model PRN222.Milktea.RazorPage.Pages.Payments.PaymentsIndexModel
-<h2>Your Payments</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Method</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var payment in Model.Payments)
-        {
-            <tr>
-                <td>@payment.OrderId</td>
-                <td>@payment.PaymentDate</td>
-                <td>@payment.Amount</td>
-                <td>@payment.PaymentMethod</td>
-                <td>@payment.Status</td>
-                <td>
-                    @if (payment.Status == "Pending")
-                    {
-                        <form method="post" asp-page-handler="Pay">
-                            <input type="hidden" name="orderId" value="@payment.OrderId" />
-                            <select name="paymentMethod">
-                                <option value="Cash">Cash</option>
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="Mobile App">Mobile App</option>
-                            </select>
-                            <button type="submit">Pay</button>
-                        </form>
-                    }
-                </td>
-            </tr>
+
+@{
+    ViewData["Title"] = "Your Payments";
+}
+
+<style>
+    body {
+        background: url('/css/img/ClientBackGround.jpg') no-repeat center center fixed;
+        background-size: cover;
+        
+    }
+
+    .payments-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 1200px;
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #ff5733;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    select {
+        padding: 5px 10px;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .btn-pay {
+        padding: 8px 16px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-pay:hover {
+            background-color: #218838;
         }
-    </tbody>
-</table>
+</style>
+
+<div class="payments-container">
+    <h2>Your Payments</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Model.Payments)
+            {
+                <tr>
+                    <td>@payment.OrderId</td>
+                    <td>@payment.PaymentDate</td>
+                    <td>@string.Format("{0:C}", payment.Amount)</td> <!-- Format amount as currency -->
+                    <td>@payment.PaymentMethod</td>
+                    <td>@payment.Status</td>
+                    <td>
+                        @if (payment.Status == "Pending")
+                        {
+                            <form method="post" asp-page-handler="Pay" class="d-inline">
+                                <input type="hidden" name="orderId" value="@payment.OrderId" />
+                                <select name="paymentMethod">
+                                    <option value="Cash">Cash</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="Mobile App">Mobile App</option>
+                                </select>
+                                <button type="submit" class="btn-pay">Pay</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

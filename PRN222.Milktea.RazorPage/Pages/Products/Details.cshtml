@@ -1,21 +1,83 @@
 ﻿@page "{id:int}"
 @model PRN222.Milktea.RazorPage.Pages.Products.DetailsModel
 
-<h2>Product Details</h2>
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<style>
+    body {
+        background: url('/css/img/ClientBackGround.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .product-card {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .product-details {
+        padding: 20px;
+        background-color: #fff;
+    }
+
+    .product-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .product-price {
+        color: #ff5733;
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+    .product-description {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+</style>
+
+<h2 class="mb-4 text-center text-white">Product Details</h2>
 
 @if (Model.Product != null)
 {
-    <div class="card" style="width: 18rem;">
-        <img src="@Model.Product.Image" class="card-img-top" alt="Product Image">
-        <div class="card-body">
-            <h5 class="card-title">@Model.Product.Name</h5>
-            <p class="card-text"><strong>Price:</strong> @Model.Product.Price.ToString("C")</p>
-            <p class="card-text"><strong>Description:</strong> @Model.Product.Description</p>
-            <p class="card-text"><strong>Product Type:</strong> @Model.ProductTypeName</p>
-            <a asp-page="Index" class="btn btn-primary">Back to Product List</a>
+    <div class="card product-card mx-auto" style="max-width: 600px;">
+        <img src="@Model.Product.Image" class="product-image" alt="Product Image">
+        <div class="card-body product-details">
+            <h5 class="product-title">@Model.Product.Name</h5>
+            <p class="product-price">@Model.Product.Price.ToString("C")</p>
+            <p class="product-description"><strong>Description:</strong> @Model.Product.Description</p>
+            <p class="product-description"><strong>Product Type:</strong> @Model.ProductTypeName</p>
+
+            <!-- Back to Product List Button -->
+            <a asp-page="Index" class="btn btn-primary btn-custom">Back to Product List</a>
+
+            <!-- Add to Cart Button -->
             <form method="post" asp-page-handler="AddToCart" class="mt-2">
                 <input type="hidden" name="productId" value="@Model.Product.ProductId" />
-                <button type="submit" class="btn btn-success">Add to Cart</button>
+                <button type="submit" class="btn btn-success btn-custom">Add to Cart</button>
             </form>
         </div>
     </div>

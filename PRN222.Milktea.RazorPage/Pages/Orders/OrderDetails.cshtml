@@ -1,39 +1,106 @@
 ﻿@page "{orderId:int}"
 @model PRN222.Milktea.RazorPage.Pages.Orders.OrderDetailsModel
+
 @{
     ViewData["Title"] = "Order Details";
 }
 
-<h2>Order Details</h2>
+<style>
+    body {
+        background: url('/css/img/ClientBackGround.jpg') no-repeat center center fixed;
+        background-size: cover;
+        
+    }
 
-<div>
-    <p><strong>Order ID:</strong> @Model.Order.OrderId</p>
-    <p><strong>Date:</strong> @Model.Order.OrderDate</p>
-    <p><strong>Status:</strong> @Model.Order.Status</p>
-    <p><strong>Total Amount:</strong> @Model.Order.TotalAmount</p>
-</div>
+    .order-details-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 1000px;
+        width: 100%;
+        text-align: center;
+    }
 
-<h3>Items in Order</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.OrderItems)
-        {
+        .order-details-container h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+    .order-summary p {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #ff5733;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .back-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #ff5733;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+        .back-btn:hover {
+            background-color: #cc4626;
+        }
+</style>
+
+<div class="order-details-container">
+    <h2>Order Details</h2>
+
+    <div class="order-summary">
+        <p><strong>Order ID:</strong> @Model.Order.OrderId</p>
+        <p><strong>Date:</strong> @Model.Order.OrderDate</p>
+        <p><strong>Status:</strong> @Model.Order.Status</p>
+        <p><strong>Total Amount:</strong> @Model.Order.TotalAmount</p>
+    </div>
+
+    <h3>Items in Order</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
                 <tr>
                     <td>@item.ProductName</td>
                     <td>@item.Quantity</td>
                     <td>@item.UnitPrice</td>
                     <td>@(item.Quantity * item.UnitPrice)</td>
                 </tr>
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
 
-<a asp-page="/Orders/Index">Back to Orders</a>
+    <a asp-page="/Orders/Index" class="back-btn">Back to Orders</a>
+</div>

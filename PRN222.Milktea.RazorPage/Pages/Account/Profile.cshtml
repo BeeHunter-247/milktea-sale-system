@@ -1,8 +1,51 @@
 ﻿@page
 @model PRN222.Milktea.RazorPage.Pages.Account.ProfileModel
-<h2>Your Profile</h2>
-<div>
+@{
+    ViewData["Title"] = "Your Profile";
+}
+
+<style>
+    body {
+        background: url('/css/img/ClientBackGround.jpg') no-repeat center center fixed;
+        background-size: cover;
+        
+    }
+
+    .profile-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+    }
+
+        .profile-container p {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+    .btn-edit {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #d2691e;
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .btn-edit:hover {
+            background-color: #a0522d;
+        }
+</style>
+
+<div class="profile-container">
+    <h2 class="mb-4">Your Profile</h2>
     <p><strong>Full Name:</strong> @Model.Profile.FullName</p>
     <p><strong>Email:</strong> @Model.Profile.Email</p>
-    <a asp-page="EditProfile">Edit Profile</a>
+    <a asp-page="EditProfile" class="btn-edit">Edit Profile</a>
 </div>

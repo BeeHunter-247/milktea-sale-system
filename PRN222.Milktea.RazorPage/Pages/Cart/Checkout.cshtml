@@ -1,27 +1,80 @@
 ﻿@page
 @model PRN222.Milktea.RazorPage.Pages.Cart.CheckoutModel
-<h2>Checkout</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Cart.Items)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.UnitPrice</td>
-                <td>@item.Quantity</td>
-                <td>@(item.UnitPrice * item.Quantity)</td>
-            </tr>
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<style>
+    body {
+        background: url('/css/img/ClientBackGround.jpg') no-repeat center center fixed;
+        background-size: cover;
+        
+    }
+
+    .checkout-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .btn-primary {
+        background-color: #ff5733;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #cc4626;
         }
-    </tbody>
-</table>
-<form method="post">
-    <button type="submit" class="btn btn-primary">Place Order</button>
-</form>
+
+    .total-price {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="checkout-container">
+    <h2 class="mb-4">Checkout</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Cart.Items)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>$@item.UnitPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>$@(item.UnitPrice * item.Quantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="total-price">
+        Total: $@Model.Cart.Items.Sum(item => item.UnitPrice * item.Quantity)
+    </div>
+
+    <form method="post">
+        <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+    </form>
+</div>
