@@ -17,5 +17,6 @@ namespace PRN222.Milktea.Service.Services.Interfaces
         Task<List<ProductModel>> IsActiveProduct();
         Task<IEnumerable<ProductViewModel>> GetProductsAsync(int? productId);
         Task<ProductViewModel> GetProductDetailsAsync(int productId);
+        Task<Pagination<ProductModel>> GetProductsPaginationAsync(PaginationModel pagination);
     }
 }

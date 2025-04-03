@@ -56,7 +56,7 @@ namespace PRN222.Milktea.Service.Services
             }
         }
 
-        public async Task<IEnumerable<ComboModel>> GetComboAsync()
+        public async Task<Pagination<ComboModel>> GetComboAsync(PaginationModel pagination)
         {
             try
             {
@@ -78,9 +78,9 @@ namespace PRN222.Milktea.Service.Services
                     ProductId1Name = p.ProductId1Navigation.Name,
                     ProductId2Name = p.ProductId2Navigation.Name,
                     ProductId3Name = p.ProductId3Navigation.Name,
-                });
+                }).Skip((pagination.PageIndex - 1) * pagination.PageSize).Take(pagination.PageSize).ToList();
 
-                return comboModel;
+                return new Pagination<ComboModel>(comboModel, comboes.Count());
             }
             catch(Exception ex)
             {

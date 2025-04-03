@@ -22,9 +22,19 @@ namespace PRN222.Milktea.MVC.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 6)
         {
-            var products =await _productService.GetProductsAsync();
+            var pagination = new PaginationModel
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+
+            var products =await _productService.GetProductsPaginationAsync(pagination);
+            pagination.PageTotals = (int)Math.Ceiling(products.TotalCount / (double)pagination.PageSize);
+
+            ViewBag.Pagination = pagination;
             return View(products);
         }
 

@@ -9,7 +9,7 @@ namespace PRN222.Milktea.Service.Services.Interfaces
 {
     public interface IComboService
     {
-        Task<IEnumerable<ComboModel>> GetComboAsync();
+        Task<Pagination<ComboModel>> GetComboAsync(PaginationModel pagination);
         Task<ComboModel> GetComboByIdAsync(int id);
         Task AddComboAsync(ComboModel model);
         Task UpdateComboAsync(ComboModel model);
